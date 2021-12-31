@@ -1,39 +1,18 @@
-import react from 'react'
+
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Task from './Task'
+import TaskComponent from '../components/TaskComponent'
+import AddTaskBar from '../components/AddTaskBar'
+import TaskList from '../components/TaskList'
+
 export default function Home () {
-  let [ val, setValue ] = useState( '' )
-  let [ taskList, setTaskList ] = useState( Task.getAll() )
 
-
-  // function getTaskList () {
-
-  //   let taskList = typeof window === 'undefined'
-  //      ? []
-  //      : JSON.parse( localStorage.getItem( "taskList" ) ) || []
-  //    return taskList
-  //  }
-
-  function addTask () {
-    // let list = getTaskList()
-    // let task = { text: val }
-    // list.push( task )
-    // localStorage.setItem( "taskList", JSON.stringify( list ) )
-
-    Task.add( val )
-    setValue( '' )
-  }
-  function deleteTask ( text ) {
-
-    let list = getTaskList()
-    let newList = list.filter( ( task ) => task.text !== text )
-    // localStorage.setItem( "taskList", JSON.stringify( newList ) )
-
-  }
   
+  const [show,setShow] = useState(false)
+
   return (
     <div className={ styles.container }>
       <Head>
@@ -43,28 +22,17 @@ export default function Home () {
       </Head>
 
       <div className="container">
-
-
         <h2> To Do List </h2>
 
-        <div className="add-task-container">
-          <input value={ val } onChange={ ( e ) => setValue( e.target.value ) } /> <button onClick={ () => addTask() }> + </button>
+        <AddTaskBar />
+
+        <button onClick={ () => setShow( !show ) }> {show ? "hide" : "show"} </button>
+        <div className="task-list-container">
+          <TaskList show={ show } />
         </div>
 
-        <div className="task-list-container">
-          { taskList &&
-            taskList.map( ( task, i ) => {
-            return <div key={ i }>
-              <span> { task.text }</span>
-              <button onClick={ () => deleteTask( task.text ) }> - </button>
-            </div>  
-          })
-        }
-
-            </div>
-
       </div>
 
-      </div>
-      )
+    </div>
+  )
 }

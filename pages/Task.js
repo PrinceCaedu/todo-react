@@ -10,7 +10,7 @@ const store = {
             ? []
             : JSON.parse( localStorage.getItem( "taskList" ) )
 
-        return taskList
+        return taskList ? taskList : []
     },
 }
 
@@ -21,6 +21,8 @@ const Task = {
 
         let add = { text, id: uuidv4() }
         let taskList = store.load()
+
+        console.log (taskList)
 
         taskList.push( add )
 
@@ -40,8 +42,11 @@ const Task = {
 
     },
 
-    delete: () => {
+    delete: ( text ) => {
+        let list = store.load()
+        let newList = list.filter( ( task ) => task.text !== text )
 
+        store.save( newList )
     }
 }
 
