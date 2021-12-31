@@ -1,16 +1,12 @@
-
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState, useEffect } from 'react'
-import Task from './Task'
-import TaskComponent from '../components/TaskComponent'
+import { useState } from 'react'
 import AddTaskBar from '../components/AddTaskBar'
 import TaskList from '../components/TaskList'
 
 export default function Home () {
 
-  
+
   const [show,setShow] = useState(false)
 
   return (
@@ -36,3 +32,4 @@ export default function Home () {
     </div>
   )
 }
+

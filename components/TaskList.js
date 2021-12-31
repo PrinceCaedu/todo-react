@@ -5,14 +5,14 @@ import TaskComponent from "./TaskComponent"
 
 
 function TaskList ( props ) {
-    let [ taskList, setTaskList ] = useState( Task.getAll() )
+    const [ taskList, setTaskList ] = useState( Task.getAll() )
 
     function deleteTask ( text ) {
         Task.delete( text )
         setTaskList( Task.getAll() )
     }
+    
     if ( props.show ) {
-
         return (
             <div className="task-list-container">
                 { taskList &&
