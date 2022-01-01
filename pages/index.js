@@ -1,13 +1,28 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AddTaskBar from '../components/AddTaskBar'
 import TaskList from '../components/TaskList'
+import TaskDb from '../db/Task'
 
-export default function Home () {
+export default function Home() {
 
+  const [ taskList, setTaskList ] = useState( [] )
+  const [ show, setShow ] = useState( false )
 
-  const [show,setShow] = useState(false)
+  const refreshTaskList = () => {
+    setTaskList( TaskDb.getAll() )
+  }
+
+  useEffect( () => {
+    let mounted = true
+
+    if ( mounted ) {
+      setTaskList( TaskDb.getAll() )
+    }
+
+    return () => { mounted = false }
+  }, [] )
 
   return (
     <div className={ styles.container }>
@@ -18,13 +33,28 @@ export default function Home () {
       </Head>
 
       <div className="container">
-        <h2> To Do List </h2>
 
-        <AddTaskBar />
+        <div className="todo-header-container">
+          <h2 className="todo-header"> To Do List </h2>
+        </div>
 
-        <button onClick={ () => setShow( !show ) }> {show ? "hide" : "show"} </button>
+        <div className="add-task-container">
+          <AddTaskBar refreshTaskListFn={ refreshTaskList } />
+
+        </div>
+
+        <button className="show-task-list-btn"
+          onClick={ () => setShow( !show ) }
+        >
+          { show ? "hide" : "show" }
+        </button>
+
         <div className="task-list-container">
-          <TaskList show={ show } />
+          <TaskList
+            show={ show }
+            refreshTaskListFn={ refreshTaskList }
+            taskList={ taskList }
+          />
         </div>
 
       </div>

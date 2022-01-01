@@ -1,28 +1,25 @@
-import { useState } from 'react'
-import Task from '../pages/Task'
-import TaskComponent from "./TaskComponent"
+import TaskDb from '../db/Task'
+import Task from "./TaskComponent"
 
 
+function TaskList( { show, taskList, refreshTaskListFn } ) {
 
-function TaskList ( props ) {
-    const [ taskList, setTaskList ] = useState( Task.getAll() )
-
-    function deleteTask ( text ) {
-        Task.delete( text )
-        setTaskList( Task.getAll() )
+    function deleteTask( text ) {
+        TaskDb.delete( text )
+        refreshTaskListFn()
     }
-    
-    if ( props.show ) {
-        return (
-            <div className="task-list-container">
-                { taskList &&
-                    taskList.map( ( task, i ) => {
-                        return <TaskComponent key={ i } text={ task.text } deleteFn={ deleteTask } />
-                    } )
-                }
-            </div>
 
-        )
+    if ( show ) {
+        return taskList.map( ( task, i ) => {
+
+            const props = {
+                key: i,
+                text: task.text,
+                deleteFn: deleteTask
+            }
+
+            return <Task { ...props } />
+        } )
     } else {
         return []
     }

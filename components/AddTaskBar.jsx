@@ -1,27 +1,26 @@
 import { useState } from 'react'
-import Task from '../pages/Task'
+import TaskDb from '../db/Task'
 
-const AddTaskBar = ( props ) => {
+const AddTaskBar = ({ refreshTaskListFn }) => {
     let [ val, setValue ] = useState( '' )
-    
+
     const updateInput = ( value ) => {
         setValue( value )
     }
 
-    function addTask () {
-        Task.add( val )
+    function addTask() {
+        TaskDb.add( val )
         setValue( '' )
-        // setTaskList( Task.getAll() )
+        refreshTaskListFn()
     }
 
-    console.log( props )
-    return <div className="add-task-container">
+    return [
         <input
             value={ val }
-            onChange={ ( e ) => updateInput( e.target.value ) }
-        />
+            onChange={ ({ target: { value }}) => updateInput( value ) }
+        />,
         <button onClick={ () => addTask() }> + </button>
-    </div>
+    ]
 }
 
 export default AddTaskBar

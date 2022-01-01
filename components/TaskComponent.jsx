@@ -1,11 +1,13 @@
-import react from 'react'
 
+const TaskComponent = ({ text, deleteFn }) => {
 
-const TaskComponent = ( props ) => {
-
-  return <div>
-    <span> { props.text }</span>
-    <button onClick={ () => props.deleteFn( props.text ) }> - </button>
+  return <div className="task-container">
+    <span> { text }</span>
+    <button className="delete-task-btn"
+      onClick={ () => deleteFn( text ) }
+    >
+      -
+    </button>
   </div>
 
 }
