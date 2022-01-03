@@ -3,7 +3,7 @@ import TaskDb from '../db/Task'
 
 
 // ({ refreshTaskListFn }) is an example of deconstruction
-const AddTaskBar = ({ refreshTaskListFn }) => {
+const AddTaskBar = ( { refreshTaskListFn } ) => {
     let [ inputValue, setInputValue ] = useState( '' )
 
     const updateInput = ( value ) => {
@@ -12,6 +12,9 @@ const AddTaskBar = ({ refreshTaskListFn }) => {
     }
 
     function addTask() {
+        if ( inputValue === '' ) {
+            return
+        }
         TaskDb.add( inputValue )
         setInputValue( '' )
         refreshTaskListFn()
@@ -21,8 +24,8 @@ const AddTaskBar = ({ refreshTaskListFn }) => {
         <input
             className="add-task-input"
             value={ inputValue }
-            onChange={ ({ target: { value }}) => updateInput( value ) }
-            onKeyUp={ ({key}) => key === 'Enter' ? addTask() : null }
+            onChange={ ( { target: { value } } ) => updateInput( value ) }
+            onKeyUp={ ( { key } ) => key === 'Enter' ? addTask() : null }
         />,
         <button onClick={ () => addTask() }> + </button>
     ]
