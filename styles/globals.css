@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.delete-task-btn {
+  width: 25px;
+  height: 25px;
+}
