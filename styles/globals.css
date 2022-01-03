@@ -19,4 +19,8 @@ a {
 .delete-task-btn {
   width: 25px;
   height: 25px;
+
+  box-shadow: black 0 0 0 0;
+
+  background-color: red;
 }

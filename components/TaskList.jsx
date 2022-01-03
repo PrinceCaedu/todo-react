@@ -1,3 +1,4 @@
+import styles from '../styles/TaskList.module.css'
 import { useState } from 'react'
 import { Task } from "./index"
 import TaskDb from '../db/Task'
@@ -18,30 +19,39 @@ function TaskList( { taskList, refreshTaskListFn } ) {
         setShow( !show )
     }
 
+    function renderTasks() {
+        if ( show ) {
+            return (
+                <div className={ styles.taskcontainer } >
+                    {
+                        taskList.map( ( task, i ) => {
+
+                            const props = {
+                                id: task.id,
+                                text: task.text,
+                                deleteFn: deleteTask
+                            }
+
+                            return <Task key={ i } { ...props } />
+                        } )
+                    }
+                </div >
+            )
+        }
+    }
+
     return (
-        <div className="task-list">
+        <div className={ styles.container }>
             <div>
                 <button
-                    className="task-list-show-button"
+                    className={ styles.showbutton }
                     onClick={ () => toggleList() }
                 >
                     { show ? "hide" : "show" }
                 </button>
             </div>
-            <div className="task-list-tasks-container">
-                {
-                    show && taskList.map( ( task, i ) => {
+            { renderTasks() }
 
-                        const props = {
-                            id: task.id,
-                            text: task.text,
-                            deleteFn: deleteTask
-                        }
-
-                        return <Task key={ i } { ...props } />
-                    } )
-                }
-            </div>
         </div>
     )
 }

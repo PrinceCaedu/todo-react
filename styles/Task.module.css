@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.container:hover {
+    background-color: rgba(0,0,0, .25)
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.deletebtn {
+    border: solid 1px black;
+
+    border-radius: 50%;
+    background-color: #fff;
+
+    width: 2em;
+    height: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
