@@ -1,22 +1,25 @@
 import { useState } from 'react'
 import TaskDb from '../db/Task'
 
+
+// ({ refreshTaskListFn }) is an example of deconstruction
 const AddTaskBar = ({ refreshTaskListFn }) => {
-    let [ val, setValue ] = useState( '' )
+    let [ inputValue, setInputValue ] = useState( '' )
 
     const updateInput = ( value ) => {
-        setValue( value )
+        setInputValue( value )
     }
 
     function addTask() {
-        TaskDb.add( val )
-        setValue( '' )
+        TaskDb.add( inputValue )
+        setInputValue( '' )
         refreshTaskListFn()
     }
 
     return [
         <input
-            value={ val }
+            className="add-task-input"
+            value={ inputValue }
             onChange={ ({ target: { value }}) => updateInput( value ) }
         />,
         <button onClick={ () => addTask() }> + </button>

@@ -19,13 +19,14 @@ const store = {
 const Task = {
     add: ( text ) => {
 
-        let add = { text, id: uuidv4() }
+        let add = { 
+                id: uuidv4(),
+                text,
+            }
+
         let taskList = store.load()
 
-        console.log (taskList)
-
         taskList.push( add )
-
         store.save( taskList )
     },
 
@@ -42,9 +43,9 @@ const Task = {
 
     },
 
-    delete: ( text ) => {
+    delete: ( id ) => {
         let list = store.load()
-        let newList = list.filter( ( task ) => task.text !== text )
+        let newList = list.filter( ( task ) => task.id !== id )
 
         store.save( newList )
     }

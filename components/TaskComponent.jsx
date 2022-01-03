@@ -1,15 +1,17 @@
 
-const TaskComponent = ({ text, deleteFn }) => {
+const TaskComponent = ( { id, text, deleteFn } ) => {
 
-  return <div className="task-container">
-    <span> { text }</span>
-    <button className="delete-task-btn"
-      onClick={ () => deleteFn( text ) }
-    >
-      -
-    </button>
-  </div>
-
+  return (
+    <div className="task-container">
+      <span> { text }</span>
+      <button
+        className="delete-task-btn"
+        onClick={ () => deleteFn( id ) }
+      >
+        -
+      </button>
+    </div>
+  )
 }
 
 

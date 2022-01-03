@@ -4,8 +4,8 @@ import Task from "./TaskComponent"
 
 function TaskList( { show, taskList, refreshTaskListFn } ) {
 
-    function deleteTask( text ) {
-        TaskDb.delete( text )
+    function deleteTask( id ) {
+        TaskDb.delete( id )
         refreshTaskListFn()
     }
 
