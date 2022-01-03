@@ -7,6 +7,7 @@ const AddTaskBar = ({ refreshTaskListFn }) => {
     let [ inputValue, setInputValue ] = useState( '' )
 
     const updateInput = ( value ) => {
+
         setInputValue( value )
     }
 
@@ -21,6 +22,7 @@ const AddTaskBar = ({ refreshTaskListFn }) => {
             className="add-task-input"
             value={ inputValue }
             onChange={ ({ target: { value }}) => updateInput( value ) }
+            onKeyUp={ ({key}) => key === 'Enter' ? addTask() : null }
         />,
         <button onClick={ () => addTask() }> + </button>
     ]
