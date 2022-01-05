@@ -1,6 +1,6 @@
 import styles from '../styles/TaskList.module.css'
 import { useState } from 'react'
-import { Task } from "./index"
+import { AddTaskBar, Task } from "./index"
 import TaskDb from '../db/Task'
 
 
@@ -20,6 +20,11 @@ function TaskList( { taskList, refreshTaskListFn } ) {
     }
 
     function renderTasks() {
+
+        if (!taskList.length ) {
+            return <span>No Tasks!</span>
+        }
+
         if ( show ) {
             return (
                 <div className={ styles.taskcontainer } >
@@ -42,6 +47,7 @@ function TaskList( { taskList, refreshTaskListFn } ) {
 
     return (
         <div className={ styles.container }>
+            <AddTaskBar refreshTaskListFn={ refreshTaskListFn } />
             <div>
                 <button
                     className={ styles.showbutton }

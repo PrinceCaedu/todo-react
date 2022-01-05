@@ -7,7 +7,6 @@ import TaskDb from '../db/Task'
 export default function Home() {
 
   const [ taskList, setTaskList ] = useState( [] )
-  const [ show, setShow ] = useState( false )
 
   const refreshTaskList = () => {
     setTaskList( TaskDb.getAll() )
@@ -38,13 +37,12 @@ export default function Home() {
           <h2 className="todo-header"> To Do List </h2>
         </div>
 
-        <div className="add-task-container">
+        {/* <div className="add-task-container">
           <AddTaskBar refreshTaskListFn={ refreshTaskList } />
-        </div>
+        </div> */}
 
         <div className="task-list-container">
           <TaskList
-            show={ show }
             refreshTaskListFn={ refreshTaskList }
             taskList={ taskList }
           />

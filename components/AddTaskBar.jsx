@@ -1,3 +1,4 @@
+import styles from '../styles/AddTaskBar.module.css'
 import { useState } from 'react'
 import TaskDb from '../db/Task'
 
@@ -21,14 +22,14 @@ const AddTaskBar = ( { refreshTaskListFn } ) => {
     }
 
     return (
-        <div className="add-task-bar">
+        <div className={ styles.container }>
             <input
-                className="add-task-input"
+                className={ styles.input }
                 value={ inputValue }
                 onChange={ ( { target: { value } } ) => updateInput( value ) }
                 onKeyUp={ ( { key } ) => key === 'Enter' ? addTask() : null }
             />
-            <button onClick={ () => addTask() }> + </button>
+            <button className={ styles.btn } onClick={ () => addTask() }> + </button>
         </div>
     )
 }
