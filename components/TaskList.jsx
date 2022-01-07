@@ -9,7 +9,6 @@ function TaskList( { taskList, refreshTaskListFn } ) {
 
     const [ show, setShow ] = useState( true )
 
-
     function deleteTask( id ) {
         TaskDb.delete( id )
         refreshTaskListFn()
@@ -21,7 +20,7 @@ function TaskList( { taskList, refreshTaskListFn } ) {
 
     function renderTasks() {
 
-        if (!taskList.length ) {
+        if ( !taskList.length ) {
             return <span>No Tasks!</span>
         }
 
@@ -45,15 +44,17 @@ function TaskList( { taskList, refreshTaskListFn } ) {
         }
     }
 
+    const buttonText = show ? "hide" : "show"
+
     return (
         <div className={ styles.container }>
             <AddTaskBar refreshTaskListFn={ refreshTaskListFn } />
             <div>
                 <button
                     className={ styles.showbutton }
-                    onClick={ () => toggleList() }
+                    onClick={ toggleList }
                 >
-                    { show ? "hide" : "show" }
+                    { buttonText }
                 </button>
             </div>
             { renderTasks() }
@@ -61,6 +62,5 @@ function TaskList( { taskList, refreshTaskListFn } ) {
         </div>
     )
 }
-
 
 export default TaskList
