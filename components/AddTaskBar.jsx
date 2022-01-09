@@ -1,37 +1,52 @@
+import styles from '../styles/AddTaskBar.module.css'
 import { useState } from 'react'
 import TaskDb from '../db/Task'
 
-
-// ({ refreshTaskListFn }) is an example of deconstruction
 const AddTaskBar = ( { refreshTaskListFn } ) => {
     let [ inputValue, setInputValue ] = useState( '' )
 
-    const updateInput = ( value ) => {
-
-        setInputValue( value )
-    }
-
     function addTask() {
-        if ( inputValue === '' ) {
-            return
-        }
         TaskDb.add( inputValue )
         setInputValue( '' )
         refreshTaskListFn()
     }
 
+    function handleChange({ target: { value }}) {
+        setInputValue( value )
+    }
+
+    function handleKeyUp({ key }) {
+        const enterWasPressed = key === 'Enter'
+
+        if ( enterWasPressed ) {
+            addTask()
+        }
+    }
+
+    function handleClick() {
+        if ( inputValue === '' ) {
+            return
+        }
+        
+        addTask()
+    }
+
     return (
-        <div className="add-task-bar">
+        <div className={ styles.container }>
             <input
-                className="add-task-input"
+                className={ styles.input }
                 value={ inputValue }
-                onChange={ ( { target: { value } } ) => updateInput( value ) }
-                onKeyUp={ ( { key } ) => key === 'Enter' ? addTask() : null }
+                onChange={ handleChange }
+                onKeyUp={ handleKeyUp }
             />
-            <button onClick={ () => addTask() }> + </button>
+            <button
+                className={ styles.btn }
+                onClick={ handleClick }
+            >
+                +
+            </button>
         </div>
     )
 }
 
 export default AddTaskBar
-

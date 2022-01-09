@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+}
+
+.input {
+    width: 85%;
+}
+
+.btn {
+    /* width: 10%; */
+    align-content: center;
+    border: none;
+    border-radius: 25%;
+
+    background-color: black;
+    color: white;
+
+    width: 2em;
+    height: 2em;
+
+    padding: none;
+}

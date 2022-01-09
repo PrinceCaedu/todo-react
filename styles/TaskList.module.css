@@ -3,6 +3,11 @@
     flex-direction: column;
     width: 200px;
 
+    box-shadow: 1px 5px 7px 7px rgba(100, 100, 100, .5);
+
+    padding: 1em;
+    border-radius: 1em;
+
 }
 
 
