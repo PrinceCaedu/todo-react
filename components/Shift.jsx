@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 import styles from '../styles/Shift.module.css'
+
+import { Breakdown, CornerData } from '../components'
 
 
 const employeeData = {
@@ -9,7 +11,6 @@ const employeeData = {
 }
 
 const drawerCountData = {
-    expectedBalance: 0,
     balance: 0,
     variance: 0,
     counts: {
@@ -28,8 +29,9 @@ const drawerCountData = {
 }
 
 const shiftData = {
-    date: Date.now(),
-    type: null,
+    date: "Friday January 7, 2022",
+    type: 'Open',
+
     employees: {
         totalCashSales: 0,
         totalTips: 0,
@@ -39,52 +41,92 @@ const shiftData = {
     cuts: [],
     startDrawerCount: Object.assign( {}, drawerCountData ),
     endDrawerCount: Object.assign( {}, drawerCountData ),
-    data: {
-        totalCash: 0,   //? the sum of the starting balance and the total cash sales from all employees
-        totalDeficit: 0,    //? the sum of all employees tips and all paid outs
-        expectedEndingBalance: 0,   //? the result of total cash - total deficit
-        endingBalance: 0,   //? the balance of the end of shift drawer count
-        startingBalance: 0,    //? from user input, is also the expected balance of the start of shift drawer count
-    },
+
+    totalCash: 0,   //? the sum of the starting balance and the total cash sales from all employees
+    totalDeficit: 0,    //? the sum of all employees tips and all paid outs
+    expectedEndingBalance: 0,   //? the result of total cash - total deficit
+    endingBalance: 0,   //? the balance of the end of shift drawer count
+    startingBalance: 0,    //? from user input, is also the expected balance of the start of shift drawer count
 }
 
-function createState() {
-    const state = Object.assign( {}, shiftData )
+const breakdownData = ({ 
+    totalCash, 
+    totalDeficit, 
+    expectedEndingBalance, 
+    endingBalance, 
+    startingBalance,
+}) => ({
+    totalCash, 
+    totalDeficit, 
+    expectedEndingBalance, 
+    endingBalance,
+    startingBalance,
+})
 
-    return state
+function initialState() {
+    return { ...shiftData }
+}
+
+function reducer( state, action ) {
+    switch ( action.type ) {
+        case 'updateCornerData': {
+            const newState = { ...state, ...action.data }
+            return newState
+        }
+
+        case 'updatePaidOuts': {
+            const newState = { ...state, paidOuts: { ...action.data } }
+            // newState.paidOuts = { ...action.data }
+            return newState
+        }
+
+        default:
+            return state;
+    }
 }
 
 
-/*
-    TODO: look into useReducer, most likely better than useState and tons of custom functions
-    
-*/
+function PaidOut( { total, amounts, updateDataFn } ) {
+
+    return (
+        <div>
+            <h1>Paid Outs</h1>
+        </div>
+    )
+}
+
+
 
 export default function Shift() {
 
-    // get data if data exists and load into state
-    // if data does not exist, create empty data object and load into state
-    const blankState = createState()
-
-    const [ state, setState ] = useState( blankState )
-
-
-
+    const [ state, dispatch ] = useReducer( reducer, initialState() )
 
 
     return (
         <div className={ styles.grid }>
 
-            <div className={ styles.dataone } ></div>
+            <div className={ styles.dataone } >
+                <CornerData
+                    date={ state.date }
+                    type={ state.type }
+                    startingBalance={ state.startingBalance }
+                    updateDataFn={ data => dispatch( { type: 'updateCornerData', data } ) }
+                />
+            </div>
             <div className={ styles.employees } ></div>
-            <div className={ styles.paidouts } ></div>
+            <div className={ styles.paidouts } >
+                <PaidOut
+                    total={ state.paidOuts.total }
+                    amounts={ state.paidOuts.amounts }
+                    updateDataFn={ data => dispatch( { type: 'updatePaidOuts', data } ) }
+                />
+            </div>
             <div className={ styles.cuts } ></div>
             <div className={ styles.startdrawer } ></div>
             <div className={ styles.enddrawer } ></div>
-            <div className={ styles.breakdown } ></div>
-
-
-
+            <div className={ styles.breakdown } >
+                <Breakdown { ...breakdownData( state ) } />
+            </div>
         </div>
     )
 }
