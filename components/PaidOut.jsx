@@ -10,7 +10,7 @@ export default function PaidOut ( props ) {
     }
 
 
-    const { total, amounts } = pretendState
+    let { total, amounts } = pretendState
     // const { total, amounts, updateDataFn } = props
     console.log(total, amounts)
 
