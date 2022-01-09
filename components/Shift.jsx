@@ -1,16 +1,17 @@
 import { useReducer } from 'react'
 import styles from '../styles/Shift.module.css'
+import moment from 'moment'
 
-import { Breakdown, CornerData, PaidOut } from '../components'
+import { Breakdown, CornerData, Employees, PaidOut } from '../components'
 
 
-const employeeData = {
+const initialEmployeeData = {
     name: '',
     cashSales: 0,
     totalTips: 0,
 }
 
-const drawerCountData = {
+const initialDrawerCountData = {
     balance: 0,
     variance: 0,
     counts: {
@@ -33,8 +34,8 @@ const initialPaidOutsData = {
     amounts: []
 }
 
-const shiftData = {
-    date: "Friday January 7, 2022",
+const initialShiftData = {
+    date: moment().format( 'dddd MMMM Do, YYYY' ),
     type: 'Open',
 
     employees: {
@@ -44,8 +45,8 @@ const shiftData = {
     },
     paidOuts: { ...initialPaidOutsData },
     cuts: [],
-    startDrawerCount: Object.assign( {}, drawerCountData ),
-    endDrawerCount: Object.assign( {}, drawerCountData ),
+    startDrawerCount: { ...initialDrawerCountData },
+    endDrawerCount: { ...initialDrawerCountData },
 
     totalCash: 0,   //? the sum of the starting balance and the total cash sales from all employees
     totalDeficit: 0,    //? the sum of all employees tips and all paid outs
@@ -54,22 +55,38 @@ const shiftData = {
     startingBalance: 0,    //? from user input, is also the expected balance of the start of shift drawer count
 }
 
-const breakdownData = ({ 
-    totalCash, 
-    totalDeficit, 
-    expectedEndingBalance, 
-    endingBalance, 
-    startingBalance,
-}) => ({
-    totalCash, 
-    totalDeficit, 
-    expectedEndingBalance, 
+const cornerDataData = ( {
+    date, type, startingBalance
+} ) => ( {
+    date, type, startingBalance
+} )
+
+const breakdownData = ( {
+    totalCash,
+    totalDeficit,
+    expectedEndingBalance,
     endingBalance,
     startingBalance,
-})
+} ) => ( {
+    totalCash,
+    totalDeficit,
+    expectedEndingBalance,
+    endingBalance,
+    startingBalance,
+} )
+
+function employeeData( { employees } ) {
+    return employees
+}
+
+const paidOutsData = ( {
+    paidOuts: { total, amounts }
+} ) => ( {
+    total, amounts
+} )
 
 function initialState() {
-    return { ...shiftData }
+    return { ...initialShiftData }
 }
 
 function reducer( state, action ) {
@@ -103,17 +120,16 @@ export default function Shift() {
 
             <div className={ styles.dataone } >
                 <CornerData
-                    date={ state.date }
-                    type={ state.type }
-                    startingBalance={ state.startingBalance }
+                    { ...cornerDataData( state ) }
                     updateDataFn={ data => dispatch( { type: 'updateCornerData', data } ) }
                 />
             </div>
-            <div className={ styles.employees } ></div>
+            <div className={ styles.employees } >
+                <Employees { ...employeeData( state ) } />
+            </div>
             <div className={ styles.paidouts } >
                 <PaidOut
-                    total={ state.paidOuts.total }
-                    amounts={ state.paidOuts.amounts }
+                    { ...paidOutsData( state ) }
                     updateDataFn={ data => dispatch( { type: 'updatePaidOuts', data } ) }
                 />
             </div>
