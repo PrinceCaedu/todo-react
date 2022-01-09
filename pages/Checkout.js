@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Checkout.module.css'
-
+import PaidOut from '../components/PaidOut'
 export default function Checkout() {
 
     return (
@@ -15,7 +15,9 @@ export default function Checkout() {
 
                 <div className={ styles.dataone } ></div>
                 <div className={ styles.employees } ></div>
-                <div className={ styles.paidouts } ></div>
+                <div className={ styles.paidouts } >
+                    <PaidOut />
+                </div>
                 <div className={ styles.cuts } ></div>
                 <div className={ styles.startdrawer } ></div>
                 <div className={ styles.enddrawer } ></div>

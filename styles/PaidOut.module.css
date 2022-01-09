@@ -1,0 +1,17 @@
+.rectangle {
+    height: 100%;
+    width: 100%;
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputStyle {
+    height: 20px;
+    width: 100%;
+    color: royalblue;
+    text-align: center;
+    border-style: solid;
+    font: message-box;
+    font-size: large;
+}   

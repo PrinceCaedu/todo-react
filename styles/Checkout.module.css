@@ -28,7 +28,7 @@
 
 .paidouts {
     grid-area: paidouts;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .cuts {
