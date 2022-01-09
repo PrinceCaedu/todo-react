@@ -14,39 +14,45 @@
 
     height: 150vh;
     width: 100vw;
+
+    box-sizing: border-box;
+}
+
+.grid div {
+    border: solid black 1px;
 }
 
 .dataone {
     grid-area: dataone;
-    background-color: red;
+    /* background-color: red; */
 }
 
 .employees {
     grid-area: employees;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 .paidouts {
     grid-area: paidouts;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .cuts {
     grid-area: cuts;
-    background-color: cyan;
+    /* background-color: cyan; */
 }
 
 .startdrawer {
     grid-area: start-drawer;
-    background-color: purple;
+    /* background-color: purple; */
 }
 
 .enddrawer {
     grid-area: end-drawer;
-    background-color: magenta;
+    /* background-color: magenta; */
 }
 
 .breakdown {
     grid-area: breakdown;
-    background-color: darkgreen;
+    /* background-color: darkgreen; */
 }
