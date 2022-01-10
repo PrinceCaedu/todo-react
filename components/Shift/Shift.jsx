@@ -1,8 +1,8 @@
 import { useReducer } from 'react'
-import styles from '../styles/Shift.module.css'
+import styles from './Shift.module.css'
 import moment from 'moment'
 
-import { Breakdown, CornerData, Employees, PaidOut } from '../components'
+import { Breakdown, CornerData, Employees, PaidOut } from '..'
 
 
 const initialEmployeeData = {
@@ -31,7 +31,7 @@ const initialDrawerCountData = {
 
 const initialPaidOutsData = {
     total: 0.0,
-    amounts: []
+    amounts: ['']
 }
 
 const initialShiftData = {
@@ -97,7 +97,6 @@ function reducer( state, action ) {
         }
 
         case 'updatePaidOuts': {
-            console.log(action)
             const newState = { ...state, paidOuts: { amounts: [...action.data.amounts] } }
 
             const numberArray = newState.paidOuts.amounts
@@ -105,14 +104,12 @@ function reducer( state, action ) {
                 .filter( amount => !isNaN( amount ))
                 .map( amount => parseFloat( amount ))
 
-                console.log(numberArray)
-
             let newTotal = 0
             numberArray.forEach( amount => newTotal += amount )
 
             console.log(newTotal)
             newState.paidOuts.total = parseFloat(newTotal).toFixed(2)
-            // newState.paidOuts.total = newTotal
+
             return newState
         }
 
@@ -126,7 +123,6 @@ function reducer( state, action ) {
 export default function Shift() {
 
     const [ state, dispatch ] = useReducer( reducer, initialState() )
-
 
     return (
         <div className={ styles.grid }>

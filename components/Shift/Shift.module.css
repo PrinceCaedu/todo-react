@@ -16,10 +16,12 @@
     width: 100vw;
 
     box-sizing: border-box;
+
+    background-color: lightgrey;
 }
 
 .grid div {
-    border: solid black 1px;
+    /* border: solid black 1px; */
 }
 
 .dataone {

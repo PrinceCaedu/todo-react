@@ -1,5 +1,5 @@
-import styles from '../styles/PaidOut.module.css'
-import { useEffect } from 'react'
+import styles from './PaidOut.module.css'
+
 export default function PaidOut ( props ) {
 
     const { total, amounts, updateDataFn } = props
