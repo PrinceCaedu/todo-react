@@ -1,4 +1,4 @@
-import styles from '../styles/Employees.module.css'
+import styles from './Employees.module.css'
 
 export default function Employees( props ) {
 
