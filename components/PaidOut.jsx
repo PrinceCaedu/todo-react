@@ -4,35 +4,17 @@ export default function PaidOut ( props ) {
 
     const { total, amounts, updateDataFn } = props
 
-
-    function updateTotal () {
-        let newTotal = 0
-
-        function addAmount ( takeAmount ) {
-            newTotal += takeAmount
-        }
-
-        amounts.map( addAmount )
-        updateDataFn( { total: newTotal, amounts } )
-    }
-
-    useEffect( () => {
-        updateTotal()
-    }, [] )
-
     function handleChange ( value, index ) {
         let newAmounts = [ ...amounts ]
-        newAmounts[ index ] = value || 0
+        newAmounts[ index ] = value
 
-        let newTotal = 0.0
-        newAmounts.map( amount => newTotal += parseFloat( amount ) )
-        updateDataFn( { total: newTotal, amounts: newAmounts } )
+        updateDataFn( { amounts: newAmounts } )
     }
 
     function handleClick() {
         let newAmounts = [...amounts]
         newAmounts.push("")
-        updateDataFn({ total, amounts: newAmounts })
+        updateDataFn({ amounts: newAmounts })
     }
 
 

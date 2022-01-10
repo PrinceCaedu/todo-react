@@ -10,24 +10,19 @@ export default function CornerData( { date, type, startingBalance, updateDataFn 
         updateDataFn( { type: value, startingBalance } )
     }
 
-    // const formattedDate = new Date( date ).toString()
 
     return (
         <div className={ styles.container }>
             <div>{ date }</div>
-            <div>
                 <select value={ type } onChange={ handleSelect } >
                     <option>Open</option>
                     <option>Mid</option>
                     <option>Close</option>
                 </select>
-            </div>
-            <div>
                 <input
                     value={ startingBalance }
                     onChange={ handleChange }
                 />
-            </div>
         </div>
     )
 }
