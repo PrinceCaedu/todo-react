@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import styles from '../styles/Shift.module.css'
 
-import { Breakdown, CornerData } from '../components'
+import { Breakdown, CornerData, PaidOut } from '../components'
 
 
 const employeeData = {
@@ -28,6 +28,11 @@ const drawerCountData = {
     }
 }
 
+const initialPaidOutsData = {
+    total: 0.0,
+    amounts: []
+}
+
 const shiftData = {
     date: "Friday January 7, 2022",
     type: 'Open',
@@ -37,7 +42,7 @@ const shiftData = {
         totalTips: 0,
         employees: [],
     },
-    paidOuts: { total: 0, amounts: [] },
+    paidOuts: { ...initialPaidOutsData },
     cuts: [],
     startDrawerCount: Object.assign( {}, drawerCountData ),
     endDrawerCount: Object.assign( {}, drawerCountData ),
@@ -85,15 +90,6 @@ function reducer( state, action ) {
     }
 }
 
-
-function PaidOut( { total, amounts, updateDataFn } ) {
-
-    return (
-        <div>
-            <h1>Paid Outs</h1>
-        </div>
-    )
-}
 
 
 

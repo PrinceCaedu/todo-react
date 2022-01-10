@@ -1,45 +1,63 @@
 import styles from '../styles/PaidOut.module.css'
-import { useState } from 'react'
-import Box from './Box'
-import { faThermometerHalf } from "@fortawesome/free-solid-svg-icons"
+import { useEffect } from 'react'
 export default function PaidOut ( props ) {
 
-    const pretendState = {
-        total: 0,
-        amounts: [42, 35, 44]
-    }
+    const { total, amounts, updateDataFn } = props
 
 
-    let { total, amounts } = pretendState
-    // const { total, amounts, updateDataFn } = props
-    console.log(total, amounts)
+    function updateTotal () {
+        let newTotal = 0
 
-    function updateTotal (){
-
-        total = 0
-
-        function addAmount (takeAmount){
-
-            total += takeAmount
-
+        function addAmount ( takeAmount ) {
+            newTotal += takeAmount
         }
 
-        amounts.map (addAmount)
-
+        amounts.map( addAmount )
+        updateDataFn( { total: newTotal, amounts } )
     }
 
-    function showList () {
+    useEffect( () => {
         updateTotal()
+    }, [] )
+
+    function handleChange ( value, index ) {
+        let newAmounts = [ ...amounts ]
+        newAmounts[ index ] = value || 0
+
+        let newTotal = 0.0
+        newAmounts.map( amount => newTotal += parseFloat( amount ) )
+        updateDataFn( { total: newTotal, amounts: newAmounts } )
+    }
+
+    function handleClick() {
+        let newAmounts = [...amounts]
+        newAmounts.push("")
+        updateDataFn({ total, amounts: newAmounts })
+    }
+
+
+    function showList () {
         return (
             <div className={ styles.rectangle } >
-                { amounts.map( amount => (
-                <div>
-                    <input value={amount} className={ styles.inputStyle } />
+                { amounts.map( ( amount, i ) => (
+                    <div key={ i }>
+                        <input
+                            onChange={ ( { target: { value } } ) => handleChange( value, i ) }
+                            value={ amount }
+                            className={ styles.inputStyle } />
+                    </div>
+                ) ) }
+
+                <div className={styles.btnContainer} >
+                    <button onClick={handleClick } className={styles.addBtn}> Add </button>
                 </div>
-                
-        
-                ) )}
-                {total}
+
+
+                <div>
+                    <span>
+                        Total: { total }
+                    </span>
+                </div>
             </div>
 
         )
