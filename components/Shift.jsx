@@ -97,12 +97,22 @@ function reducer( state, action ) {
         }
 
         case 'updatePaidOuts': {
-            const newState = { ...state, paidOuts: { amounts: [...action.data] } }
-            const numberArray = newState.paidOuts.amounts.filter( amount => parseFloat(amount) )
-            let newTotal = 0.0
-            numberArray.forEach( amount => newTotal += parseFloat(amount) )
+            console.log(action)
+            const newState = { ...state, paidOuts: { amounts: [...action.data.amounts] } }
 
-            newState.paidOuts.total = newTotal
+            const numberArray = newState.paidOuts.amounts
+                .filter( amount => amount !== '' )
+                .filter( amount => !isNaN( amount ))
+                .map( amount => parseFloat( amount ))
+
+                console.log(numberArray)
+
+            let newTotal = 0
+            numberArray.forEach( amount => newTotal += amount )
+
+            console.log(newTotal)
+            newState.paidOuts.total = parseFloat(newTotal).toFixed(2)
+            // newState.paidOuts.total = newTotal
             return newState
         }
 
