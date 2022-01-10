@@ -97,8 +97,12 @@ function reducer( state, action ) {
         }
 
         case 'updatePaidOuts': {
-            const newState = { ...state, paidOuts: { ...action.data } }
-            // newState.paidOuts = { ...action.data }
+            const newState = { ...state, paidOuts: { amounts: [...action.data] } }
+            const numberArray = newState.paidOuts.amounts.filter( amount => parseFloat(amount) )
+            let newTotal = 0.0
+            numberArray.forEach( amount => newTotal += parseFloat(amount) )
+
+            newState.paidOuts.total = newTotal
             return newState
         }
 
@@ -106,7 +110,6 @@ function reducer( state, action ) {
             return state;
     }
 }
-
 
 
 
