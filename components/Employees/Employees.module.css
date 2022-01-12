@@ -31,3 +31,10 @@
 .row input {
     width: 33%;
 }
+
+.footer {
+    display: flex;
+    
+
+    width: 100%;
+}
