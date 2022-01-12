@@ -8,7 +8,7 @@ import { Breakdown, CornerData, Employees, PaidOut } from '..'
 const initialEmployeeData = {
     name: '',
     cashSales: 0,
-    totalTips: 0,
+    ccTips: 0,
 }
 
 const initialDrawerCountData = {
@@ -31,7 +31,7 @@ const initialDrawerCountData = {
 
 const initialPaidOutsData = {
     total: 0.0,
-    amounts: ['']
+    amounts: [ '' ]
 }
 
 const initialShiftData = {
@@ -41,7 +41,12 @@ const initialShiftData = {
     employees: {
         totalCashSales: 0,
         totalTips: 0,
-        employees: [],
+        employees: [
+            { ...initialEmployeeData },
+            { ...initialEmployeeData },
+            { ...initialEmployeeData },
+            { ...initialEmployeeData }
+        ],
     },
     paidOuts: { ...initialPaidOutsData },
     cuts: [],
@@ -75,8 +80,8 @@ const breakdownData = ( {
     startingBalance,
 } )
 
-function employeeData( { employees } ) {
-    return employees
+function employeeData( { employees: { totalTips, totalCashSales, employees } } ) {
+    return { totalTips, totalCashSales, employees }
 }
 
 const paidOutsData = ( {
@@ -97,19 +102,33 @@ function reducer( state, action ) {
         }
 
         case 'updatePaidOuts': {
-            const newState = { ...state, paidOuts: { amounts: [...action.data.amounts] } }
+            const newState = { ...state, paidOuts: { amounts: [ ...action.data.amounts ] } }
 
             const numberArray = newState.paidOuts.amounts
                 .filter( amount => amount !== '' )
-                .filter( amount => !isNaN( amount ))
-                .map( amount => parseFloat( amount ))
+                .filter( amount => !isNaN( amount ) )
+                .map( amount => parseFloat( amount ) )
 
             let newTotal = 0
             numberArray.forEach( amount => newTotal += amount )
 
-            console.log(newTotal)
-            newState.paidOuts.total = parseFloat(newTotal).toFixed(2)
+            newState.paidOuts.total = parseFloat( newTotal ).toFixed( 2 )
 
+            return newState
+        }
+
+        case 'updateEmployees': {
+            const newState = { ...state }
+            newState.employees.employees = [ ...action.data ]
+
+            newState.employees.totalCashSales = parseFloat( newState.employees.employees
+                .reduce( ( total, employee ) => total += parseFloat( employee.cashSales ), 0 )
+            ).toFixed( 2 )
+
+            newState.employees.totalTips = parseFloat( newState.employees.employees
+                .reduce( ( total, employee ) => total += parseFloat( employee.ccTips ), 0 )
+            ).toFixed( 2 )
+            console.log( newState )
             return newState
         }
 
@@ -134,7 +153,10 @@ export default function Shift() {
                 />
             </div>
             <div className={ styles.employees } >
-                <Employees { ...employeeData( state ) } />
+                <Employees
+                    { ...employeeData( state ) }
+                    updateDataFn={ data => dispatch( { type: 'updateEmployees', data } ) }
+                />
             </div>
             <div className={ styles.paidouts } >
                 <PaidOut
