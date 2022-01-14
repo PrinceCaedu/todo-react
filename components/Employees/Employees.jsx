@@ -30,7 +30,6 @@ export default function Employees( { totalCashSales, totalTips, employees, updat
 
     return (
         <>
-            <h3>Employees</h3>
             <div className={ styles.table }>
                 <div className={ styles.row }>
                     <span>Name</span>
@@ -40,8 +39,14 @@ export default function Employees( { totalCashSales, totalTips, employees, updat
                 { renderEmployeeRows( employees ) }
             </div>
             <div className={ styles.footer }>
-                <div>{totalCashSales}</div>
-                <div>{totalTips}</div>
+                <div>
+                    <div>Total Cash Sales</div>
+                    <div>{totalCashSales}</div>
+                </div>
+                <div>
+                    <div>Total Credit Card Tips</div>
+                    <div>{totalTips}</div>
+                    </div>
             </div>
         </>
     )
